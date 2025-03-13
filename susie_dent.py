@@ -54,6 +54,8 @@ class SusieDent:
             return False
 
     def scoring(self, team1_word, team2_word):
+        team1_word = team1_word.lower()
+        team2_word = team2_word.lower()
         len_word1 = len(team1_word)
         len_word2 = len(team2_word)
         if len_word1 == 9:
@@ -74,7 +76,7 @@ class SusieDent:
             points2 = 0
         return [points1, points2]
 
-    def could_we_have_done_better(self, letters, target_words):
+    def could_we_have_done_any_better(self, letters, target_words):
             letters = ''.join(letters).lower()
             target_word_lengths = [len(word) for word in target_words]
             max_target_length = max(target_word_lengths, default=0)

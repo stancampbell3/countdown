@@ -1,5 +1,5 @@
 import unittest
-from lettersround import LettersRound
+from letters_round import LettersRound
 
 class TestLettersRound(unittest.TestCase):
 

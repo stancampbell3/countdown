@@ -10,7 +10,8 @@ setup(
     packages=find_packages(),
     install_requires=[
         'nltk',
-        'unittest'
+        'unittest',
+        'Flask'
     ],
     classifiers=[
         'Programming Language :: Python :: 3',

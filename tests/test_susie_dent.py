@@ -1,4 +1,3 @@
-import pytest
 from susie_dent import is_valid_english_word, scoring
 
 def test_is_valid_english_word():

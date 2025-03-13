@@ -33,15 +33,11 @@ def is_valid_english_word(word):
     if not synsets:
         return False
 
-    for synset in synsets:
-        if synset.pos =='n': # noun
-            lemmas = synset.lemmas()
-            for lemma in lemmas:
-                if lemma.istitle():
-                    return False
-
-    # heuristic for abbreviations, needs work
-    if test_word.isupper() and len(test_word) > 1:
+    # heuristic for proper names, beginning with capital letter, needs work
+    # covers all caps acronyms, but not all proper names
+    if word is "I":
+        return False
+    if word[0].isupper() and len(word) > 1:
         return False
 
     return True

@@ -1,5 +1,5 @@
 import unittest
-from susie_dent import SusieDent
+from core.susie_dent import SusieDent
 
 
 class TestSusieDent(unittest.TestCase):

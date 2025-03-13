@@ -1,7 +1,11 @@
 import unittest
-from letters_round import LettersRound
+from core.letters_round import LettersRound
+
 
 class TestLettersRound(unittest.TestCase):
+
+    def setUp(self):
+        self.a_round = LettersRound()
 
     def test_select_letters(self):
         a_round = LettersRound()

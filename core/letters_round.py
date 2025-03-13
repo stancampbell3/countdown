@@ -1,6 +1,6 @@
 import random
 import string
-from susie_dent import SusieDent
+from core.susie_dent import SusieDent
 
 class LettersRound:
     def __init__(self):

@@ -8,6 +8,13 @@ from nltk.stem import WordNetLemmatizer
 # nltk.download('wordnet')
 # nltk.download('omw-1.4')
 
+def contains_vowels(letters):
+    for letter in letters:
+        if letter.upper() in 'AEIOUYW':
+            return True
+    return False
+
+
 class SusieDent:
     def __init__(self):
         self.lemmatizer = WordNetLemmatizer()
@@ -29,6 +36,9 @@ class SusieDent:
 
         if len(test_word) == 1 and (test_word == 'a' or test_word == 'i'):
             return True
+
+        if not contains_vowels(test_word):
+            return False
 
         # heuristic for proper names, beginning with capital letter, needs work
         # covers all caps acronyms, but not all proper names
@@ -64,13 +74,16 @@ class SusieDent:
             points2 = 0
         return [points1, points2]
 
-    def could_we_have_done_better(self, letters):
+def could_we_have_done_better(self, letters, target_words):
         letters = ''.join(letters).lower()
-        possible_words = set()
+        target_word_lengths = [len(word) for word in target_words]
+        max_target_length = max(target_word_lengths, default=0)
+
+        # Generate all possible subsets of the given letters
         for i in range(1, len(letters) + 1):
             for perm in permutations(letters, i):
                 word = ''.join(perm)
-                if self.is_valid_english_word(word):
-                    possible_words.add(word)
-        longest_words = [word for word in possible_words if len(word) == max(map(len, possible_words))]
-        return longest_words
+                if self.is_valid_english_word(word) and len(word) > max_target_length:
+                    return [word]
+
+        return []

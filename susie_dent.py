@@ -1,19 +1,34 @@
-import wn
 from itertools import permutations
+
+from nltk.corpus import wordnet as wn
+from nltk.stem import WordNetLemmatizer
+
+# Assume the wordnet data has been downloaded as in:
+# import nltk
+# nltk.download('wordnet')
+# nltk.download('omw-1.4')
 
 class SusieDent:
     def __init__(self):
-        self.en_wordnet = wn.Wordnet('oewn:2024')
+        self.lemmatizer = WordNetLemmatizer()
+
+    def find_word_forms(self, test_word):
+        test_word = test_word.lower()
+        forms = set()
+
+        # Check different parts of speech
+        for pos in ['n', 'v', 'a', 'r']:
+            lemmas = wn.lemmas(self.lemmatizer.lemmatize(test_word, pos=pos))
+            for lemma in lemmas:
+                forms.add(lemma.name())
+
+        return forms
 
     def is_valid_english_word(self, word):
         test_word = word.lower()
 
         if len(test_word) == 1 and (test_word == 'a' or test_word == 'i'):
             return True
-
-        synsets = self.en_wordnet.synsets(test_word)
-        if not synsets:
-            return False
 
         # heuristic for proper names, beginning with capital letter, needs work
         # covers all caps acronyms, but not all proper names
@@ -22,7 +37,11 @@ class SusieDent:
         if word[0].isupper() and len(word) > 1:
             return False
 
-        return True
+        # check if word has at least one word form in wordnet
+        if len(self.find_word_forms(test_word)) > 0:
+            return True
+        else:
+            return False
 
     def scoring(self, team1_word, team2_word):
         len_word1 = len(team1_word)

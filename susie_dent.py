@@ -1,4 +1,5 @@
 import wn
+from itertools import permutations
 
 class SusieDent:
     def __init__(self):
@@ -43,3 +44,14 @@ class SusieDent:
         if not valid2:
             points2 = 0
         return [points1, points2]
+
+    def could_we_have_done_better(self, letters):
+        letters = ''.join(letters).lower()
+        possible_words = set()
+        for i in range(1, len(letters) + 1):
+            for perm in permutations(letters, i):
+                word = ''.join(perm)
+                if self.is_valid_english_word(word):
+                    possible_words.add(word)
+        longest_words = [word for word in possible_words if len(word) == max(map(len, possible_words))]
+        return longest_words

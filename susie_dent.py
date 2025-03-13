@@ -74,16 +74,16 @@ class SusieDent:
             points2 = 0
         return [points1, points2]
 
-def could_we_have_done_better(self, letters, target_words):
-        letters = ''.join(letters).lower()
-        target_word_lengths = [len(word) for word in target_words]
-        max_target_length = max(target_word_lengths, default=0)
+    def could_we_have_done_better(self, letters, target_words):
+            letters = ''.join(letters).lower()
+            target_word_lengths = [len(word) for word in target_words]
+            max_target_length = max(target_word_lengths, default=0)
 
-        # Generate all possible subsets of the given letters
-        for i in range(1, len(letters) + 1):
-            for perm in permutations(letters, i):
-                word = ''.join(perm)
-                if self.is_valid_english_word(word) and len(word) > max_target_length:
-                    return [word]
+            # Generate all possible subsets of the given letters
+            for i in range(1, len(letters) + 1):
+                for perm in permutations(letters, i):
+                    word = ''.join(perm)
+                    if self.is_valid_english_word(word) and len(word) > max_target_length:
+                        return [word]
 
-        return []
+            return []

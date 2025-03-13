@@ -45,10 +45,9 @@ class TestSusieDent(unittest.TestCase):
 
     def test_could_we_have_done_better(self):
         letters = ['m', 'o', 'u', 's', 'e', 'c', 'a', 't']
-        # longest_words = self.susie_dent.could_we_have_done_better(letters)
-        # self.assertIn('mouse', longest_words)
-        # self.assertIn('cameos', longest_words)
-        self.assertTrue(True)
+        longest_words = self.susie_dent.could_we_have_done_better(letters, ['mouse', 'cat'])
+        print(longest_words)
+        self.assertTrue('muscat' in longest_words)
 
 if __name__ == '__main__':
     unittest.main()

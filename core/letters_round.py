@@ -4,9 +4,6 @@ from core.susie_dent import SusieDent
 
 class LettersRound:
     def __init__(self):
-        self.letters = []
-        self.team1_word = ""
-        self.team2_word = ""
         self.susie_dent = SusieDent()
 
     def select_letters(self, num_vowels, num_consonants):
@@ -24,19 +21,15 @@ class LettersRound:
         random.shuffle(self.letters)
         return self.letters
 
-    def submit_words(self, team1_word, team2_word):
-        self.team1_word = team1_word
-        self.team2_word = team2_word
-
-    def score_round(self):
-        if not all(letter in self.letters for letter in self.team1_word.upper()):
+    def score_round(self, team1_word, team2_word, letters):
+        if not all(letter in letters for letter in team1_word.upper()):
             team1_score = 0
         else:
-            team1_score = self.susie_dent.scoring(self.team1_word, self.team2_word)[0]
+            team1_score = self.susie_dent.scoring(team1_word, team2_word)[0]
 
-        if not all(letter in self.letters for letter in self.team2_word.upper()):
+        if not all(letter in letters for letter in team2_word.upper()):
             team2_score = 0
         else:
-            team2_score = self.susie_dent.scoring(self.team1_word, self.team2_word)[1]
+            team2_score = self.susie_dent.scoring(team1_word, team2_word)[1]
 
         return team1_score, team2_score

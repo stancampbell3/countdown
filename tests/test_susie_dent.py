@@ -43,11 +43,11 @@ class TestSusieDent(unittest.TestCase):
     def test_scoring_5(self):
         self.assertEqual(self.susie_dent.scoring('astronaut', 'beautiful'), [18, 18])
 
-    def test_could_we_have_done_better(self):
+    def test_could_we_have_done_any_better(self):
         letters = ['m', 'o', 'u', 's', 'e', 'c', 'a', 't']
         longest_words = self.susie_dent.could_we_have_done_any_better(letters, ['mouse', 'cat'])
         print(longest_words)
-        self.assertTrue('muscat' in longest_words)
+        self.assertTrue('mucosae' in longest_words)
 
 if __name__ == '__main__':
     unittest.main()

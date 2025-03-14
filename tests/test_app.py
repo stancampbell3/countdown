@@ -50,5 +50,38 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn('better_words', data)
 
+    def test_select_numbers(self):
+        response = self.app.get('/numbersround/select?num_large=2&num_small=4')
+        data = json.loads(response.get_data(as_text=True))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(data['numbers']), 6)
+
+    def test_get_target_number(self):
+        response = self.app.get('/numbersround/target')
+        data = json.loads(response.get_data(as_text=True))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('target_number', data)
+
+    def test_validate_rachelriley_solution(self):
+        payload = {
+            'target': 532,
+            'selection': [25, 50, 75, 100, 3, 6],
+            'solution': '100 * 5 + 25 + 7'
+        }
+        response = self.app.post('/rachelriley/validate', data=json.dumps(payload), content_type='application/json')
+        data = json.loads(response.get_data(as_text=True))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['difference'], 0)
+
+    def test_solve_rachelriley(self):
+        payload = {
+            'target': 532,
+            'selection': [25, 50, 75, 100, 3, 6]
+        }
+        response = self.app.post('/rachelriley/solve', data=json.dumps(payload), content_type='application/json')
+        data = json.loads(response.get_data(as_text=True))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('solution', data)
+
 if __name__ == '__main__':
     unittest.main()

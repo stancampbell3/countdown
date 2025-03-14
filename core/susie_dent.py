@@ -9,12 +9,6 @@ from nltk.stem import WordNetLemmatizer
 # nltk.download('wordnet')
 # nltk.download('omw-1.4')
 
-def contains_vowels(letters):
-    for letter in letters:
-        if letter.upper() in 'AEIOUYW':
-            return True
-    return False
-
 
 class SusieDent:
     def __init__(self):
@@ -38,7 +32,7 @@ class SusieDent:
         if len(test_word) == 1 and (test_word == 'a' or test_word == 'i'):
             return True
 
-        if not contains_vowels(test_word):
+        if not self.contains_vowels(test_word):
             return False
 
         # heuristic for proper names, beginning with capital letter, needs work
@@ -84,12 +78,20 @@ class SusieDent:
         max_target_length = max(target_word_lengths, default=0)
 
         # Generate all possible subsets of the given letters, starting with the longest
-        for i in range(len(letters), 0, -1):
+        # and stopping when a valid word is found or when the length of the subset is
+        # less than the longest target word
+        for i in range(len(letters), max_target_length, -1):
             for perm in permutations(letters, i):
                 word = ''.join(perm)
                 if (len(word) > max_target_length
-                        and self.is_valid_english_word(word)
-                        and contains_vowels(word)):
+                        and self.contains_vowels(word)
+                        and self.is_valid_english_word(word)):
                     return [word]
 
         return []
+
+    def contains_vowels(self, letters):
+        for letter in letters:
+            if letter.upper() in 'AEIOUYW':
+                return True
+        return False

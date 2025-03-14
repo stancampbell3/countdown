@@ -16,10 +16,10 @@ class NumbersRound:
 
         selected_large = random.sample(self.large_numbers, num_large)
         selected_small = random.sample(self.small_numbers, num_small)
-        self.numbers = selected_large + selected_small
-        random.shuffle(self.numbers)
-        return self.numbers
+        numbers = selected_large + selected_small
+        random.shuffle(numbers)
+        return numbers
 
     def find_target_number(self):
-        self.target_number = random.randint(101, 999)
-        return self.target_number
+        target_number = random.randint(101, 999)
+        return target_number

@@ -5,6 +5,8 @@ from core.susie_dent import SusieDent
 class LettersRound:
     def __init__(self):
         self.susie_dent = SusieDent()
+        self.vowels = 'AEIOU'
+        self.consonants = ''.join(set(string.ascii_uppercase) - set(self.vowels))
 
     def select_letters(self, num_vowels, num_consonants):
         if num_vowels + num_consonants != 9:
@@ -14,12 +16,9 @@ class LettersRound:
         if not (4 <= num_consonants <= 6):
             raise ValueError("The number of consonants must be between 4 and 6.")
 
-        vowels = 'AEIOU'
-        consonants = ''.join(set(string.ascii_uppercase) - set(vowels))
-
-        self.letters = random.choices(vowels, k=num_vowels) + random.choices(consonants, k=num_consonants)
-        random.shuffle(self.letters)
-        return self.letters
+        letters = random.choices(self.vowels, k=num_vowels) + random.choices(self.consonants, k=num_consonants)
+        random.shuffle(letters)
+        return letters
 
     def score_round(self, team1_word, team2_word, letters):
         if not all(letter in letters for letter in team1_word.upper()):

@@ -30,9 +30,10 @@ class TestRachelRiley(unittest.TestCase):
 
     def test_find_solution(self):
         target = 532
-        selection = [25, 50, 75, 100, 3, 6]
+        selection = [5, 100, 30, 2, 3, 4]
         solution = self.rachel_riley.find_solution(target, selection)
         self.assertIsNotNone(solution)
+        print(solution)
         self.assertEqual(validate_solution(target, selection, solution), 0)
 
 

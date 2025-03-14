@@ -87,7 +87,9 @@ class SusieDent:
         for i in range(len(letters), 0, -1):
             for perm in permutations(letters, i):
                 word = ''.join(perm)
-                if self.is_valid_english_word(word) and len(word) > max_target_length:
+                if (len(word) > max_target_length
+                        and self.is_valid_english_word(word)
+                        and contains_vowels(word)):
                     return [word]
 
         return []

@@ -36,14 +36,15 @@ class RachelRiley:
         }
 
     def find_solution(self, target, selection):
-        for perm in itertools.permutations(selection):
-            for ops in itertools.product(self.operations.keys(), repeat=len(selection) - 1):
-                expression = self._build_expression(perm, ops)
-                try:
-                    if eval(expression) == target:
-                        return expression
-                except ZeroDivisionError:
-                    continue
+        for r in range(1, len(selection) + 1):
+            for perm in itertools.permutations(selection, r):
+                for ops in itertools.product(self.operations.keys(), repeat=r - 1):
+                    expression = self._build_expression(perm, ops)
+                    try:
+                        if eval(expression) == target:
+                            return expression
+                    except ZeroDivisionError:
+                        continue
         return None
 
     def _build_expression(self, numbers, operations):

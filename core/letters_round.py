@@ -1,12 +1,17 @@
 import random
-import string
 from core.susie_dent import SusieDent
+
 
 class LettersRound:
     def __init__(self):
         self.susie_dent = SusieDent()
-        self.vowels = 'AEIOU'
-        self.consonants = ''.join(set(string.ascii_uppercase) - set(self.vowels))
+        self.vowels = 'A' * 15 + 'E' * 21 + 'I' * 13 + 'O' * 13 + 'U' * 5
+        self.consonants = (
+                'B' * 2 + 'C' * 3 + 'D' * 6 + 'F' * 2 + 'G' * 3 + 'H' * 2 +
+                'J' * 1 + 'K' * 1 + 'L' * 5 + 'M' * 4 + 'N' * 8 + 'P' * 4 +
+                'Q' * 1 + 'R' * 9 + 'S' * 9 + 'T' * 9 + 'V' * 1 + 'W' * 1 +
+                'X' * 1 + 'Y' * 1 + 'Z' * 1
+        )
 
     def select_letters(self, num_vowels, num_consonants):
         if num_vowels + num_consonants != 9:

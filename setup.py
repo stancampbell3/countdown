@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='countdown-letters',
     version='0.1.0',
-    description='A package for playing the letters round of Countdown',
+    description='A package for playing Countdown',
     author='Stan Campbell',
     author_email='stan.campbell@seashellanalytics.com',
     url='https://CHANGEME',

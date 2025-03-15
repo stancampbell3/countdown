@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from core.letters_round import LettersRound
 from core.susie_dent import SusieDent
 from core.numbers_round import NumbersRound
-from core.rachel_riley import RachelRiley, validate_solution
+from core.rachel_riley import RachelRiley
 
 app = Flask(__name__)
 letters_round = LettersRound()
@@ -72,7 +72,7 @@ def validate_rachelriley_solution():
     target = data.get('target')
     selection = data.get('selection')
     solution = data.get('solution')
-    difference = validate_solution(target, selection, solution)
+    difference = rachel_riley.validate_solution(target, selection, solution)
     return jsonify({'difference': difference})
 
 

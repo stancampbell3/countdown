@@ -14,7 +14,7 @@ This is a toy implementation of the Countdown game show in Python using Flask to
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/countdown.git
+    git clone https://github.com/stancampbell3/countdown.git
     cd countdown
     ```
 

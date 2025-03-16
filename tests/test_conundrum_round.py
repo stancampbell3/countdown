@@ -9,10 +9,12 @@ class TestConundrumRound(unittest.TestCase):
         self.conundrum_round = ConundrumRound()
         # let's get an instance of SusieDent to use to check the validity of words
         self.susie = SusieDent()
+        self.debug_mode = True
 
     def test_generate_conundrum(self):
         conundrum, solution = self.conundrum_round.generate_conundrum()
-        print(f"Conundrum: {conundrum}, Solution: {solution}")
+        if self.debug_mode:
+            print(f"Conundrum: {conundrum}, Solution: {solution}")
         self.assertEqual(len(conundrum), 9)
         self.assertEqual(len(solution), 9)
         self.assertNotEqual(conundrum, solution)

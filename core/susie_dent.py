@@ -1,6 +1,6 @@
 from itertools import permutations
 
-from nltk.corpus import wordnet as wn
+from nltk.corpus import wordnet as corpus
 from nltk.stem import WordNetLemmatizer
 
 
@@ -13,7 +13,8 @@ from nltk.stem import WordNetLemmatizer
 class SusieDent:
     def __init__(self):
         self.lemmatizer = WordNetLemmatizer()
-        self.debug_mode = True
+        self.debug_mode = False
+        self.words = corpus.words()
 
     def find_word_forms(self, test_word):
         test_word = test_word.lower()
@@ -21,7 +22,7 @@ class SusieDent:
 
         # Check different parts of speech
         for pos in ['n', 'v', 'a', 'r']:
-            lemmas = wn.lemmas(self.lemmatizer.lemmatize(test_word, pos=pos))
+            lemmas = corpus.lemmas(self.lemmatizer.lemmatize(test_word, pos=pos))
             for lemma in lemmas:
                 forms.add(lemma.name())
 
@@ -50,7 +51,13 @@ class SusieDent:
                 print("Word 'I' is a valid English word, but it is a proper noun")
             return False
 
-        return True # assume words presented are valid unless proven otherwise (kludge)
+        # if the word has at least one form then it's valid or is in the corpus directly
+        if self.find_word_forms(test_word) or test_word in self.words:
+            if self.debug_mode:
+                print(f"Word '{word}' is valid as it has forms in WordNet.")
+            return True
+        else:
+            return False
 
     def scoring(self, team1_word, team2_word):
         team1_word = team1_word.lower()
@@ -99,3 +106,9 @@ class SusieDent:
             if letter.upper() in 'AEIOUYW':
                 return True
         return False
+
+    def get_valid_english_words(self):
+        # Instead of using a cached copy from the Db, let's use the wordnet corpus
+        # to get a list of valid words and filter by is_valid_english_word
+        from nltk import corpus
+        return [word for word in corpus.words.words() if self.is_valid_english_word(word)]

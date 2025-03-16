@@ -49,5 +49,11 @@ class TestSusieDent(unittest.TestCase):
         print(longest_words)
         self.assertTrue('mucosae' in longest_words)
 
+    def test_get_valid_english_words(self):
+        valid_words = self.susie_dent.get_valid_english_words()
+        self.assertTrue(isinstance(valid_words, list))
+        self.assertTrue(len(valid_words) > 0)
+        self.assertTrue(all(isinstance(word, str) for word in valid_words))
+
 if __name__ == '__main__':
     unittest.main()

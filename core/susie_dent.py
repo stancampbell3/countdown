@@ -13,6 +13,7 @@ from nltk.stem import WordNetLemmatizer
 class SusieDent:
     def __init__(self):
         self.lemmatizer = WordNetLemmatizer()
+        self.debug_mode = True
 
     def find_word_forms(self, test_word):
         test_word = test_word.lower()
@@ -30,23 +31,26 @@ class SusieDent:
         test_word = word.lower()
 
         if len(test_word) == 1 and (test_word == 'a' or test_word == 'i'):
+            if self.debug_mode:
+                print(f"Word '{word} is a valid single-letter word. 'i' and 'a' are valid.")
             return True
+
+        if word[0].isupper():
+            if self.debug_mode:
+                print(f"Word '{word}' starts with an uppercase letter, indicating it may be a proper noun.")
+            return False
 
         if not self.contains_vowels(test_word):
+            if self.debug_mode:
+                print(f"Word '{word}' does not contain any vowels.")
             return False
 
-        # heuristic for proper names, beginning with capital letter, needs work
-        # covers all caps acronyms, but not all proper names
         if word == "I":
-            return False
-        if word[0].isupper() and len(word) > 1:
+            if self.debug_mode:
+                print("Word 'I' is a valid English word, but it is a proper noun")
             return False
 
-        # check if word has at least one word form in wordnet
-        if len(self.find_word_forms(test_word)) > 0:
-            return True
-        else:
-            return False
+        return True # assume words presented are valid unless proven otherwise (kludge)
 
     def scoring(self, team1_word, team2_word):
         team1_word = team1_word.lower()

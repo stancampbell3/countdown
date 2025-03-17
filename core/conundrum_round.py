@@ -17,3 +17,12 @@ class ConundrumRound:
         conundrum_word = ''.join(random.sample(solution_word, len(solution_word)))
         return conundrum_word, solution_word
 
+    def validate_solution(self, conundrum, solution):
+        """
+        Validate if the provided solution is correct for the given conundrum.
+        """
+        if len(conundrum) != 9 or len(solution) != 9:
+            return False
+        if sorted(conundrum) != sorted(solution):
+            return False
+        return self.susie.is_valid_english_word(solution)

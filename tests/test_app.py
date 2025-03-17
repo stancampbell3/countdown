@@ -83,5 +83,28 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn('solution', data)
 
-if __name__ == '__main__':
-    unittest.main()
+    def test_generate_conundrum(self):
+        response = self.app.get('/conundrumround/generate')
+        data = json.loads(response.get_data(as_text=True))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(data['conundrum']), 9)
+        self.assertEqual(len(data['solution']), 9)
+        self.assertNotEqual(data['conundrum'], data['solution'])
+        self.assertTrue(data['solution'].isalpha())
+        self.assertTrue(data['conundrum'].isalpha())
+        self.assertCountEqual(data['conundrum'], data['solution'])
+
+    def test_validate_conundrum_solution(self):
+        conundrum = 'sselrewop'
+        solution = 'powerless'
+        payload = {
+            'conundrum': conundrum,
+            'solution': solution
+        }
+        response = self.app.post('/conundrumround/validate', data=json.dumps(payload), content_type='application/json')
+        data = json.loads(response.get_data(as_text=True))
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(data['is_valid'])
+
+    if __name__ == '__main__':
+        unittest.main()

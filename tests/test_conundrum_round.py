@@ -23,5 +23,19 @@ class TestConundrumRound(unittest.TestCase):
         self.assertCountEqual(conundrum, solution)
         self.assertTrue(self.susie.is_valid_english_word(solution))
 
+    def test_validate_solution(self):
+        conundrum, solution = self.conundrum_round.generate_conundrum()
+        is_valid = self.conundrum_round.validate_solution(conundrum, solution)
+        if self.debug_mode:
+            print(f"Validating Conundrum: {conundrum}, Solution: {solution}, Is Valid: {is_valid}")
+        self.assertTrue(is_valid)
+
+        # Test with an invalid solution
+        invalid_solution = "invalidword"
+        is_valid_invalid = self.conundrum_round.validate_solution(conundrum, invalid_solution)
+        if self.debug_mode:
+            print(f"Validating Conundrum: {conundrum}, Invalid Solution: {invalid_solution}, Is Valid: {is_valid_invalid}")
+        self.assertFalse(is_valid_invalid)
+
 if __name__ == '__main__':
     unittest.main()

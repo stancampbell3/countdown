@@ -48,30 +48,47 @@ This is a toy implementation of the Countdown game show in Python using Flask to
 ## API Endpoints
 
 ### Letters Round
-- `GET /letters`: Selects a set of letters for the game.
+- `GET /lettersround/select`: Selects a set of letters for the game.
     ```sh
-    curl -X GET http://127.0.0.1:5000/letters
+    curl -X GET "http://127.0.0.1:5000/lettersround/select?num_vowels=3&num_consonants=6"
     ```
 
-- `POST /score`: Submits words for scoring.
+- `POST /lettersround/submit`: Submits words for scoring.
     ```sh
-    curl -X POST http://127.0.0.1:5000/score -H "Content-Type: application/json" -d '{"team1_word": "mouse", "team2_word": "cat"}'
+    curl -X POST http://127.0.0.1:5000/lettersround/submit -H "Content-Type: application/json" -d '{"team1_word": "mouse", "team2_word": "cat", "letters": ["M", "O", "U", "S", "E", "C", "A", "T"]}'
     ```
 
-- `GET /longest_word`: Finds the longest possible word from the given letters.
+### Susie Dent
+- `POST /susiedent/validate`: Validates if a word is an English word.
     ```sh
-    curl -X GET http://127.0.0.1:5000/longest_word?letters=mousecat
+    curl -X POST http://127.0.0.1:5000/susiedent/validate -H "Content-Type: application/json" -d '{"word": "mouse"}'
+    ```
+
+- `POST /susiedent/better`: Finds better words from the given letters.
+    ```sh
+    curl -X POST http://127.0.0.1:5000/susiedent/better -H "Content-Type: application/json" -d '{"letters": ["M", "O", "U", "S", "E", "C", "A", "T"], "target_words": ["cat", "mouse"]}'
     ```
 
 ### Numbers Round
-- `GET /numbers`: Selects a set of numbers for the game.
+- `GET /numbersround/select`: Selects a set of numbers for the game.
     ```sh
-    curl -X GET http://127.0.0.1:5000/numbers
+    curl -X GET "http://127.0.0.1:5000/numbersround/select?num_large=2&num_small=4"
     ```
 
-- `POST /solve`: Submits a solution for the numbers round.
+- `GET /numbersround/target`: Gets the target number for the numbers round.
     ```sh
-    curl -X POST http://127.0.0.1:5000/solve -H "Content-Type: application/json" -d '{"numbers": [100, 75, 50, 25, 6, 3], "target": 952}'
+    curl -X GET http://127.0.0.1:5000/numbersround/target
+    ```
+
+### Rachel Riley
+- `POST /rachelriley/validate`: Validates a solution for the numbers round.
+    ```sh
+    curl -X POST http://127.0.0.1:5000/rachelriley/validate -H "Content-Type: application/json" -d '{"target": 532, "selection": [25, 50, 75, 100, 3, 6], "solution": "100 * 5 + 25 + 7"}'
+    ```
+
+- `POST /rachelriley/solve`: Finds a solution for the numbers round.
+    ```sh
+    curl -X POST http://127.0.0.1:5000/rachelriley/solve -H "Content-Type: application/json" -d '{"target": 532, "selection": [25, 50, 75, 100, 3, 6]}'
     ```
 
 ## Running Tests

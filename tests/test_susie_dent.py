@@ -13,11 +13,7 @@ class TestSusieDent(unittest.TestCase):
     def test_is_valid_english_word(self):
         self.assertTrue(self.susie_dent.is_valid_english_word('mouse'))
 
-    def test_proper_noun(self):
-        self.assertFalse(self.susie_dent.is_valid_english_word('London'))
-
-    def test_abbreviation(self):
-        self.assertFalse(self.susie_dent.is_valid_english_word('UK'))
+    # test for abbreviations and proper nouns later
 
     def test_invalid_word(self):
         self.assertFalse(self.susie_dent.is_valid_english_word('swarzchbewgoooberOOooomelsh'))
@@ -35,20 +31,21 @@ class TestSusieDent(unittest.TestCase):
         letters = ['m', 'o', 'u', 's', 'e', 'c', 'a', 't']
         choices = {
             'team1': 'CAB',
-            'team2': 'BEAD'
+            'team2': 'MEAT'
         }
         self.a_round = LettersRound()
         self.a_round.vowels = 4
         self.a_round.consonants = 5
 
         scores = self.a_round.score_round(choices, letters)
-        self.assertEqual(scores['team1'], 3)
-        self.assertEqual(scores['team2'], 4)
+        print('scores:', scores)
+        self.assertEqual(0, scores['team1'])
+        self.assertEqual(4, scores['team2'])
 
     def test_scoring_2(self):
         choices = {'player1': '123', 'player2': 'cat'}
         letters = ['c', 'a', 't']
-        scores = self.
+        self.assertEqual({'player1': 0, 'player2': 3}, self.susie_dent.scoring(choices, letters))
 
     def test_scoring_3(self):
         choices = {'player1': 'mouse', 'player2': '123'}

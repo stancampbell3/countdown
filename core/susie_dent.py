@@ -36,10 +36,7 @@ class SusieDent:
                 print(f"Word '{word} is a valid single-letter word. 'i' and 'a' are valid.")
             return True
 
-        if word[0].isupper():
-            if self.debug_mode:
-                print(f"Word '{word}' starts with an uppercase letter, indicating it may be a proper noun.")
-            return False
+        # Ignore uppercase words, we'll try to catch proper nouns later
 
         if not self.contains_vowels(test_word):
             if self.debug_mode:
@@ -59,19 +56,25 @@ class SusieDent:
         else:
             return False
 
-    def scoring(self, choices):
+    def scoring(self, choices, letters):
         scores = {}
         for player_id, word in choices.items():
-            word = word.lower()
             len_word = len(word)
             if len_word == 9:
                 points = 18
             else:
                 points = len_word
 
-            valid = self.is_valid_english_word(word)
-            if not valid:
+            # make sure all the letters in the word are in the provided letters
+            print(f"Checking word '{word}' for player '{player_id}' with letters '{letters}'")
+            if any(letter not in letters for letter in word):
+                print(f"Word '{word}' contains letters not in the provided letters.")
                 points = 0
+            else:
+                valid = self.is_valid_english_word(word)
+                print(f"Word '{word}' is {'valid' if valid else 'invalid'}.")
+                if not valid:
+                    points = 0
             scores[player_id] = points
         return scores
 

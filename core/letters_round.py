@@ -26,7 +26,6 @@ class LettersRound:
         return letters
 
     def score_round(self, choices, letters):
-        scores = {}
-        for player_id, word in choices.items():
-            scores[player_id] = self.susie_dent.scoring({player_id: word})[player_id]
+        letters = [letter.upper() for letter in letters]
+        scores = self.susie_dent.scoring(choices, letters)
         return scores

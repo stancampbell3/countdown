@@ -59,28 +59,21 @@ class SusieDent:
         else:
             return False
 
-    def scoring(self, team1_word, team2_word):
-        team1_word = team1_word.lower()
-        team2_word = team2_word.lower()
-        len_word1 = len(team1_word)
-        len_word2 = len(team2_word)
-        if len_word1 == 9:
-            points1 = 18
-        else:
-            points1 = len_word1
+    def scoring(self, choices):
+        scores = {}
+        for player_id, word in choices.items():
+            word = word.lower()
+            len_word = len(word)
+            if len_word == 9:
+                points = 18
+            else:
+                points = len_word
 
-        if len_word2 == 9:
-            points2 = 18
-        else:
-            points2 = len_word2
-
-        valid1 = self.is_valid_english_word(team1_word)
-        valid2 = self.is_valid_english_word(team2_word)
-        if not valid1:
-            points1 = 0
-        if not valid2:
-            points2 = 0
-        return [points1, points2]
+            valid = self.is_valid_english_word(word)
+            if not valid:
+                points = 0
+            scores[player_id] = points
+        return scores
 
     def could_we_have_done_any_better(self, letters, target_words):
         letters = ''.join(letters).lower()

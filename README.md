@@ -48,31 +48,90 @@ This is a toy implementation of the Countdown game show in Python using Flask to
 ## API Endpoints
 
 ### Letters Round
-- `GET /letters`: Selects a set of letters for the game.
-    ```sh
-    curl -X GET http://127.0.0.1:5000/letters
-    ```
 
-- `POST /score`: Submits words for scoring.
-    ```sh
-    curl -X POST http://127.0.0.1:5000/score -H "Content-Type: application/json" -d '{"team1_word": "mouse", "team2_word": "cat"}'
-    ```
+- **`GET /lettersround/select`**
+    - **Description**: Selects letters for the letters round.
+    - **Parameters**:
+        - `num_vowels` (int): Number of vowels to select.
+        - `num_consonants` (int): Number of consonants to select.
+    - **Response**:
+        - `200 OK`: Returns the selected letters.
+        - `400 Bad Request`: Returns an error message if the parameters are invalid.
 
-- `GET /longest_word`: Finds the longest possible word from the given letters.
-    ```sh
-    curl -X GET http://127.0.0.1:5000/longest_word?letters=mousecat
-    ```
+- **`POST /lettersround/submit`**
+    - **Description**: Submits words for scoring in the letters round.
+    - **Request Body**:
+        - `choices` (dict): A map of player IDs to their chosen words.
+        - `letters` (list): The list of selected letters.
+    - **Response**:
+        - `200 OK`: Returns the scores for each player.
+
+### Susie Dent
+
+- **`POST /susiedent/validate`**
+    - **Description**: Validates if a word is an English word.
+    - **Request Body**:
+        - `word` (str): The word to validate.
+    - **Response**:
+        - `200 OK`: Returns whether the word is valid.
+
+- **`POST /susiedent/better`**
+    - **Description**: Finds better words from the given letters.
+    - **Request Body**:
+        - `letters` (list): The list of letters.
+        - `target_words` (list): The list of target words.
+    - **Response**:
+        - `200 OK`: Returns a list of better words.
 
 ### Numbers Round
-- `GET /numbers`: Selects a set of numbers for the game.
-    ```sh
-    curl -X GET http://127.0.0.1:5000/numbers
-    ```
 
-- `POST /solve`: Submits a solution for the numbers round.
-    ```sh
-    curl -X POST http://127.0.0.1:5000/solve -H "Content-Type: application/json" -d '{"numbers": [100, 75, 50, 25, 6, 3], "target": 952}'
-    ```
+- **`GET /numbersround/select`**
+    - **Description**: Selects numbers for the numbers round.
+    - **Parameters**:
+        - `num_large` (int): Number of large numbers to select.
+        - `num_small` (int): Number of small numbers to select.
+    - **Response**:
+        - `200 OK`: Returns the selected numbers.
+        - `400 Bad Request`: Returns an error message if the parameters are invalid.
+
+- **`GET /numbersround/target`**
+    - **Description**: Generates a target number for the numbers round.
+    - **Response**:
+        - `200 OK`: Returns the target number.
+
+### Rachel Riley
+
+- **`POST /rachelriley/validate`**
+    - **Description**: Validates a solution for the numbers round.
+    - **Request Body**:
+        - `target` (int): The target number.
+        - `selection` (list): The list of selected numbers.
+        - `solution` (str): The solution to validate.
+    - **Response**:
+        - `200 OK`: Returns the difference between the solution and the target.
+
+- **`POST /rachelriley/solve`**
+    - **Description**: Finds a solution for the numbers round.
+    - **Request Body**:
+        - `target` (int): The target number.
+        - `selection` (list): The list of selected numbers.
+    - **Response**:
+        - `200 OK`: Returns the solution.
+
+### Conundrum Round
+
+- **`GET /conundrumround/generate`**
+    - **Description**: Generates a conundrum and its solution.
+    - **Response**:
+        - `200 OK`: Returns the conundrum and its solution.
+
+- **`POST /conundrumround/validate`**
+    - **Description**: Validates a solution for the conundrum.
+    - **Request Body**:
+        - `conundrum` (str): The conundrum.
+        - `solution` (str): The solution to validate.
+    - **Response**:
+        - `200 OK`: Returns whether the solution is valid.
 
 ## Running Tests
 

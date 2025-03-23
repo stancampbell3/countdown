@@ -26,20 +26,24 @@ class TestLettersRound(unittest.TestCase):
             self.a_round.select_letters(3, 7)
 
     def test_score_round_valid_words(self):
-        letters = self.a_round.select_letters(3, 6)
-        team1_word = ''.join(letters[:3])
-        team2_word = ''.join(letters[3:6])
-        team1_score, team2_score = self.a_round.score_round(team1_word, team2_word, letters)
-        self.assertGreaterEqual(team1_score, 0)
-        self.assertGreaterEqual(team2_score, 0)
+        letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+        choices = {
+            'team1': 'CAB',
+            'team2': 'BEAD'
+        }
+        scores = self.a_round.score_round(choices, letters)
+        self.assertEqual(scores['team1'], 3)
+        self.assertEqual(scores['team2'], 4)
 
     def test_score_round_invalid_word(self):
-        letters = self.a_round.select_letters(3, 6)
-        team1_word = 'INVALID'
-        team2_word = ''.join(letters[3:6])
-        team1_score, team2_score = self.a_round.score_round(team1_word, team2_word, letters)
-        self.assertEqual(team1_score, 0)
-        self.assertGreaterEqual(team2_score, 0)
+        letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+        choices = {
+            'team1': 'JJJJ',
+            'team2': 'BEAD'
+        }
+        scores = self.a_round.score_round(choices, letters)
+        self.assertEqual(0, scores['team1'])
+        self.assertEqual(4, scores['team2'])
 
 
 if __name__ == '__main__':

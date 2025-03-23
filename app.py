@@ -25,11 +25,10 @@ def select_letters():
 @app.route('/lettersround/submit', methods=['POST'])
 def submit_words():
     data = request.get_json()
-    team1_word = data.get('team1_word')
-    team2_word = data.get('team2_word')
+    choices = data.get('choices')
     letters = data.get('letters')
-    team1_score, team2_score = letters_round.score_round(team1_word, team2_word, letters)
-    return jsonify({'team1_score': team1_score, 'team2_score': team2_score})
+    scores = letters_round.score_round(choices, letters)
+    return jsonify({'scores': scores})
 
 @app.route('/susiedent/validate', methods=['POST'])
 def validate_word():

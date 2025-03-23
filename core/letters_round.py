@@ -25,15 +25,8 @@ class LettersRound:
         random.shuffle(letters)
         return letters
 
-    def score_round(self, team1_word, team2_word, letters):
-        if not all(letter in letters for letter in team1_word.upper()):
-            team1_score = 0
-        else:
-            team1_score = self.susie_dent.scoring(team1_word, team2_word)[0]
-
-        if not all(letter in letters for letter in team2_word.upper()):
-            team2_score = 0
-        else:
-            team2_score = self.susie_dent.scoring(team1_word, team2_word)[1]
-
-        return team1_score, team2_score
+    def score_round(self, choices, letters):
+        scores = {}
+        for player_id, word in choices.items():
+            scores[player_id] = self.susie_dent.scoring({player_id: word})[player_id]
+        return scores

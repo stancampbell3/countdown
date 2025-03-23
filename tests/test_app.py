@@ -23,15 +23,17 @@ class TestApp(unittest.TestCase):
     def test_submit_words(self):
         letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
         payload = {
-            'team1_word': 'abc',
-            'team2_word': 'def',
+            'choices': {
+                'player1': 'cab',
+                'player2': 'bead'
+            },
             'letters': letters
         }
         response = self.app.post('/lettersround/submit', data=json.dumps(payload), content_type='application/json')
         data = json.loads(response.get_data(as_text=True))
         self.assertEqual(response.status_code, 200)
-        self.assertIn('team1_score', data)
-        self.assertIn('team2_score', data)
+        self.assertEqual(3, data['scores']['player1'])
+        self.assertEqual(4, data['scores']['player2'])
 
     def test_validate_word(self):
         payload = {'word': 'mouse'}

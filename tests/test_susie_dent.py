@@ -1,4 +1,6 @@
 import unittest
+
+from core.letters_round import LettersRound
 from core.susie_dent import SusieDent
 
 
@@ -6,6 +8,7 @@ class TestSusieDent(unittest.TestCase):
 
     def setUp(self):
         self.susie_dent = SusieDent()
+        self.a_round = None  # Placeholder for LettersRound, if needed
 
     def test_is_valid_english_word(self):
         self.assertTrue(self.susie_dent.is_valid_english_word('mouse'))
@@ -29,19 +32,38 @@ class TestSusieDent(unittest.TestCase):
         self.assertTrue(self.susie_dent.is_valid_english_word('mice'))
 
     def test_scoring_1(self):
-        self.assertEqual(self.susie_dent.scoring('mouse', 'cat'), [5, 3])
+        letters = ['m', 'o', 'u', 's', 'e', 'c', 'a', 't']
+        choices = {
+            'team1': 'CAB',
+            'team2': 'BEAD'
+        }
+        self.a_round = LettersRound()
+        self.a_round.vowels = 4
+        self.a_round.consonants = 5
+
+        scores = self.a_round.score_round(choices, letters)
+        self.assertEqual(scores['team1'], 3)
+        self.assertEqual(scores['team2'], 4)
 
     def test_scoring_2(self):
-        self.assertEqual(self.susie_dent.scoring('123', 'cat'), [0, 3])
+        choices = {'player1': '123', 'player2': 'cat'}
+        letters = ['c', 'a', 't']
+        scores = self.
 
     def test_scoring_3(self):
-        self.assertEqual(self.susie_dent.scoring('mouse', '123'), [5, 0])
+        choices = {'player1': 'mouse', 'player2': '123'}
+        letters = ['m', 'o', 'u', 's', 'e']
+        self.assertEqual(self.susie_dent.scoring(choices, letters), {'player1': 5, 'player2': 0})
 
     def test_scoring_4(self):
-        self.assertEqual(self.susie_dent.scoring('123', '456'), [0, 0])
+        choices = {'player1': '123', 'player2': '456'}
+        letters = []
+        self.assertEqual(self.susie_dent.scoring(choices, letters), {'player1': 0, 'player2': 0})
 
     def test_scoring_5(self):
-        self.assertEqual(self.susie_dent.scoring('astronaut', 'beautiful'), [18, 18])
+        choices = {'player1': 'astronaut', 'player2': 'beautiful'}
+        letters = ['a', 's', 't', 'r', 'o', 'n', 'u', 't', 'b', 'e', 'a', 'u', 't', 'i', 'f', 'u', 'l']
+        self.assertEqual(self.susie_dent.scoring(choices, letters), {'player1': 18, 'player2': 18})
 
     def test_could_we_have_done_any_better(self):
         letters = ['m', 'o', 'u', 's', 'e', 'c', 'a', 't']

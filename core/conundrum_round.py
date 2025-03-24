@@ -25,4 +25,4 @@ class ConundrumRound:
             return False
         if sorted(conundrum) != sorted(solution):
             return False
-        return self.susie.is_valid_english_word(solution)
+        return True

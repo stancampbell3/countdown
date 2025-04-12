@@ -36,6 +36,5 @@ class TestRachelRiley(unittest.TestCase):
         print(solution)
         self.assertEqual(self.rachel_riley.validate_solution(target, selection, solution), 0)
 
-
 if __name__ == '__main__':
     unittest.main()

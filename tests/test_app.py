@@ -85,6 +85,12 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn('solution', data)
 
+    def test_solve_rachelriley_from_query(self):
+        response = self.app.get('/rachelriley/solvefromquery?target=532&selection=25,50,75,100,3,6')
+        data = json.loads(response.get_data(as_text=True))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('solution', data)
+
     def test_generate_conundrum(self):
         response = self.app.get('/conundrumround/generate')
         data = json.loads(response.get_data(as_text=True))

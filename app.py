@@ -77,6 +77,16 @@ def solve_rachelriley():
     solution = rachel_riley.find_solution(target, selection)
     return jsonify({'solution': solution})
 
+@app.route('/rachelriley/solvefromquery', methods=['GET'])
+def solve_rachelriley_from_query():
+    try:
+        target = int(request.args.get('target'))
+        selection = list(map(int, request.args.get('selection').split(',')))
+        solution = rachel_riley.find_solution(target, selection)
+        return jsonify({'target': target, 'selection': selection, 'solution': solution})
+    except (ValueError, TypeError) as e:
+        return jsonify({'error': 'Invalid input. Ensure target is an integer and selection is a comma-separated list of numbers.'}), 400
+
 @app.route('/conundrumround/generate', methods=['GET'])
 def generate_conundrum():
     conundrum, solution = conundrum_round.generate_conundrum()
